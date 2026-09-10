@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/no-process-exit */
-import fs from 'fs-extra';
+import fs from 'node:fs';
 import path from 'node:path';
 
 type ReleaseType = 'stable' | 'beta' | 'nightly';
@@ -11,7 +11,7 @@ const releaseType = process.argv[3] as ReleaseType;
 // 验证参数
 if (!version || !releaseType) {
   console.error(
-    'Missing parameters. Usage: bun run setDesktopVersion.ts <version> <stable|beta|nightly>',
+    'Missing parameters. Usage: tsx setDesktopVersion.ts <version> <stable|beta|nightly>',
   );
   process.exit(1);
 }
@@ -56,7 +56,6 @@ function updateAppIcon(type: 'beta' | 'nightly') {
     }
   } catch (error) {
     console.error('  ❌ Error updating icons:', error);
-    // 不终止程序，继续处理 package.json
   }
 }
 
@@ -68,7 +67,7 @@ function updatePackageJson() {
       process.exit(1);
     }
 
-    const packageJson = fs.readJSONSync(desktopPackageJsonPath);
+    const packageJson = JSON.parse(fs.readFileSync(desktopPackageJsonPath, 'utf8'));
 
     // 始终更新版本号
     packageJson.version = version;
@@ -82,15 +81,15 @@ function updatePackageJson() {
         break;
       }
       case 'beta': {
-        packageJson.productName = 'LobeHub-Beta'; // Or 'LobeHub-Beta' if preferred
-        packageJson.name = 'lobehub-desktop-beta'; // Or 'lobehub-desktop' if preferred
+        packageJson.productName = 'LobeHub-Beta';
+        packageJson.name = 'lobehub-desktop-beta';
         console.log('🧪 Setting as Beta version.');
         updateAppIcon('beta');
         break;
       }
       case 'nightly': {
-        packageJson.productName = 'LobeHub-Nightly'; // Or 'LobeHub-Nightly'
-        packageJson.name = 'lobehub-desktop-nightly'; // Or 'lobehub-desktop-nightly'
+        packageJson.productName = 'LobeHub-Nightly';
+        packageJson.name = 'lobehub-desktop-nightly';
         console.log('🌙 Setting as Nightly version.');
         updateAppIcon('nightly');
         break;
@@ -98,7 +97,7 @@ function updatePackageJson() {
     }
 
     // 写回文件
-    fs.writeJsonSync(desktopPackageJsonPath, packageJson, { spaces: 2 });
+    fs.writeFileSync(desktopPackageJsonPath, JSON.stringify(packageJson, null, 2) + '\n', 'utf8');
 
     console.log(
       `✅ Desktop app package.json updated successfully for ${releaseType} version ${version}.`,

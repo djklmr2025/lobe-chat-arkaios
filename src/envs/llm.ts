@@ -209,6 +209,10 @@ export const getLLMConfig = () => {
 
       ENABLED_CEREBRAS: z.boolean(),
       CEREBRAS_API_KEY: z.string().optional(),
+
+      ENABLED_ARKAIOS: z.boolean().default(true),
+      ARKAIOS_API_KEY: z.string().optional(),
+      ARKAIOS_PROXY_URL: z.string().optional(),
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
@@ -416,6 +420,10 @@ export const getLLMConfig = () => {
 
       ENABLED_CEREBRAS: !!process.env.CEREBRAS_API_KEY,
       CEREBRAS_API_KEY: process.env.CEREBRAS_API_KEY,
+
+      ENABLED_ARKAIOS: process.env.ENABLED_ARKAIOS !== '0',
+      ARKAIOS_API_KEY: process.env.ARKAIOS_API_KEY,
+      ARKAIOS_PROXY_URL: process.env.ARKAIOS_PROXY_URL,
     },
   });
 };

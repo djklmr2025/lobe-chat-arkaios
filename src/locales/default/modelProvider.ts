@@ -1,4 +1,17 @@
 export default {
+  arkaios: {
+    endpoint: {
+      desc: 'Dirección del gateway o endpoint de ARKAIOS (Local Bridge, Puter o Vercel)',
+      placeholder: 'http://127.0.0.1:8000/v1',
+      title: 'Dirección del Gateway ARKAIOS',
+    },
+    title: 'ARKAIOS Gateway',
+    token: {
+      desc: 'Clave de acceso de ARKAIOS o token de sesión de Puter',
+      placeholder: 'sk-arkaios-proxy...',
+      title: 'API Key / Token',
+    },
+  },
   azure: {
     azureApiVersion: {
       desc: 'Azure 的 API 版本，遵循 YYYY-MM-DD 格式，查阅[最新版本](https://learn.microsoft.com/zh-cn/azure/ai-services/openai/reference#chat-completions)',

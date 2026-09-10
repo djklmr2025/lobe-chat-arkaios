@@ -18,6 +18,10 @@
     "baseUrl": ".",
     "types": ["vitest/globals", "@serwist/next/typings"],
     "paths": {
+      "model-bank": ["./packages/model-bank/src"],
+      "model-bank/*": ["./packages/model-bank/src/*"],
+      "@lobechat/model-runtime": ["./packages/model-runtime/src"],
+      "@lobechat/model-runtime/*": ["./packages/model-runtime/src/*"],
       "@/database/*": ["./packages/database/src/*", "./src/database/*"],
       "@/const/*": ["./packages/const/src/*", "./src/const/*"],
       "@/utils/*": ["./packages/utils/src/*", "./src/utils/*"],
